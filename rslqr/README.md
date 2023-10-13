@@ -238,7 +238,7 @@ $$
 
 
 We can now simulate the step response for a $\phi_{cmd}$ and a $\beta_{cmd}$ and plot the results.  
-![image](/rslqr/images/closedLoopStepResponse.png)
+![image](./images/closedLoopStepResponse.png)
 
 As seen above, for a 20 degree bank angle command:
 - Acceptable rise time and settling time
