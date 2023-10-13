@@ -166,7 +166,7 @@ subplot(4,1,2);
 plot(T,u(:,2)*180/pi,'LineWidth',2);
 grid on; hold on;
 plot(T,Y(:,4)*180/pi,'LineWidth',2);
-legend('Beta_{Cmd}','Phi');
+legend('Beta_{Cmd}','Beta');
 ylabel('\beta [deg]');
 set(get(fh,'CurrentAxes'),'GridAlpha',0.4,'MinorGridAlpha',0.7);
 

@@ -256,7 +256,8 @@ $$
 
 
 We can now simulate the step response for a $\phi_{cmd}$ and a $\beta_{cmd}$ and plot the results.  
-![closedLoopStepResponse](https://github.com/fgabbert/ControlsSandbox/assets/13810793/d3c23b96-6ab2-4f6f-9dac-376d4c64f49c)
+![closedLoopStepResponse](https://github.com/fgabbert/ControlsSandbox/assets/13810793/5ab6d1af-8504-4724-a44a-0a31662d4c4a)
+
 
 As seen above, for a 20 degree bank angle command:
 - Acceptable rise time and settling time
