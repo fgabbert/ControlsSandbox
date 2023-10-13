@@ -73,6 +73,11 @@ Eig(A_{ba}) =
 \end{bmatrix}
 $$
 
+Here's a screenshot of the Bare-Airframe response for some Aileron and Rudder commands. You can see the slow spiral divergence, and the lightly-damped dutch-roll mode.
+![bareAirframeStepResponse](https://github.com/fgabbert/ControlsSandbox/assets/13810793/8006ae04-df7d-4f37-9cfb-08c3e9fce5b9)
+
+
+
 ## Add Actuators
 Now, let's add simple first-order actuators to the plant model, so that we can account for actuator dynamics in our gain optimization. We will assume the same actuator dynamics for both the aileron and rudder actuators.
 

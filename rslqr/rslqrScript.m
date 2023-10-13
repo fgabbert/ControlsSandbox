@@ -113,6 +113,17 @@ u = zeros(length(t),2);
 u(tStep/0.01:end,1) = step_deg*pi/180;
 [Y,T,X] = lsim(sys_cl, u, t);
 
+%% Sim Bare-airframe
+dt = 0.01;
+t_ba = 0:dt:60;
+tStep1 = 2;
+tStep2 = 4;
+tStep3 = 6;
+step_deg = 1;
+u_ba = zeros(length(t_ba),2);
+u_ba(tStep1/0.01:tStep2/0.01,1) = step_deg*pi/180;
+u_ba(tStep2/0.01:tStep3/0.01,2) = step_deg*pi/180;
+[Y_ba,T_ba,X_ba] = lsim(sys_ba, u_ba, t_ba);
 
 
 %% Make Plots
@@ -190,3 +201,39 @@ set(get(fh,'CurrentAxes'),'GridAlpha',0.4,'MinorGridAlpha',0.7);
 set(fh, 'Position',[1950 146 1428 948]);
 fn = fn+1;
 
+% Bare Airframe Step
+fh = figure(fn);
+subplot(4,1,1);
+plot(T_ba,Y_ba(:,1)*180/pi,'LineWidth',2);
+grid on; hold on;
+legend('Phi');
+ylabel('\phi [deg]');
+title('Bare-Airframe Step Response');
+set(get(fh,'CurrentAxes'),'GridAlpha',0.4,'MinorGridAlpha',0.7);
+
+subplot(4,1,2);
+plot(T_ba,Y_ba(:,2)*180/pi,'LineWidth',2);
+grid on; hold on;
+legend('Beta');
+ylabel('\beta [deg]');
+set(get(fh,'CurrentAxes'),'GridAlpha',0.4,'MinorGridAlpha',0.7);
+
+subplot(4,1,3);
+plot(T_ba,Y_ba(:,3)*180/pi,'LineWidth',2);
+grid on; hold on;
+plot(T_ba,Y_ba(:,4)*180/pi,'LineWidth',2);
+legend('p','r');
+ylabel('rate [deg/s]');
+set(get(fh,'CurrentAxes'),'GridAlpha',0.4,'MinorGridAlpha',0.7);
+
+subplot(4,1,4);
+plot(T_ba,u_ba(:,1)*180/pi,'LineWidth',2);
+grid on; hold on;
+plot(T_ba,u_ba(:,2)*180/pi,'LineWidth',2);
+legend('da','dr');
+ylabel('\delta [deg]');
+xlabel('Time [s]');
+set(get(fh,'CurrentAxes'),'GridAlpha',0.4,'MinorGridAlpha',0.7);
+
+set(fh, 'Position',[1950 146 1428 948]);
+fn = fn+1;
