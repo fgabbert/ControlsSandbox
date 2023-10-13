@@ -210,7 +210,7 @@ $$
 Now, the optimal gain matrix is computed using `lqr()`
 
 $$ 
-[K,S,E] = lqr(A_aug, B_aug, Q, R)
+[K,S,E] = lqr(A_{aug}, B_{aug}, Q, R)
 $$
 
 Which returns the gain matrix:
