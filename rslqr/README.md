@@ -39,6 +39,7 @@ A_{ba} =
 0      &  3.3820    &-0.0654 & -0.0893\\
 \end{bmatrix}
 $$
+
 $$
 B_{ba} = 
 \begin{bmatrix}
@@ -50,24 +51,33 @@ B_{ba} =
 $$
 
 $$
-C_{ba} = \mathbb{I}_{(n_{y_{ba}}, n_{x_{ba}})}
+C_{ba} = I_{(n_{y_{ba}}, n_{x_{ba}})}
 $$
+
 $$
-D_{ba} = \mathbb{0}_{(n_{y_{ba}}, n_{u_{ba}})}
+D_{ba} = 0_{(n_{y_{ba}}, n_{u_{ba}})}
 $$
 
 ## Add Actuators
 Now, let's add simple first-order actuators to the plant model, so that we can account for actuator dynamics in our gain optimization. We will assume the same actuator dynamics for both the aileron and rudder actuators.
 
-$$ \dfrac{\delta}{\delta_{cmd}} =  \dfrac{20.2}{s+20.2} $$
+$$ 
+\dfrac{\delta}{\delta_{cmd}} =  \dfrac{20.2}{s+20.2} 
+$$
 
 Connect the actuator and airframe plant models in series, extending our system dynamics as follows:
 
-$$\dot x_{p} = A_{p}x_{p} + B_{p}u_{p}$$ 
+$$
+\dot x_{p} = A_{p}x_{p} + B_{p}u_{p}
+$$ 
 
-$$y_{p} = C_{p}x_{p} + D_{p}u_{p}$$  
+$$
+y_{p} = C_{p}x_{p} + D_{p}u_{p}
+$$  
 
-$$ where: $$
+$$ 
+where: 
+$$
 
 $$ x_{p} = \begin{bmatrix}
 \phi, \beta, p, r, \delta_{a}, \delta_{r} \end{bmatrix}^T $$
@@ -86,6 +96,7 @@ A_{p} =
          0 &       0  &       0  &       0 &        0 & -20.2000\\
 \end{bmatrix}
 $$
+
 $$
 B_{p} = 
 \begin{bmatrix}
@@ -101,11 +112,12 @@ $$
 $$
 C_{p} = 
 \begin{bmatrix}
-\mathbb{I}_{(n_{y_{ba}}, n_{x_{ba}})} & \mathbb{0}_{(n_{y_{p}}, n_{x_{p}})}
+I_{(n_{y_{ba}}, n_{x_{ba}})} & 0_{(n_{y_{p}}, n_{x_{p}})}
 \end{bmatrix}
 $$
+
 $$
-D_{p} = \mathbb{0}_{(n_{y_{p}}, n_{u_{p}})}
+D_{p} = 0_{(n_{y_{p}}, n_{u_{p}})}
 $$
 
 ## Add Tracking Error
@@ -115,14 +127,28 @@ In our case, we are designing both a bank-angle ($\phi$) and sideslip ($\beta$) 
 Since the number of outputs that we wish to control is equal to the number of control inputs we have available to us, the problem is well-posed.  
 
 We will have a single integrator on each tracking error term, and this state is defined as:  
-$$e_{y_I} = \dfrac{(y - y_{ref})}{s}$$
+
+$$
+e_{y_I} = \dfrac{(y - y_{ref})}{s}
+$$
+
 Which means that:  
-$$\dot{e_{y_I}} = (y - y_{ref})$$
+
+$$
+\dot{e_{y_I}} = (y - y_{ref})
+$$
 
 Adding an error term for both $\phi$ and $\beta$, our state vector is further extended to:
-$$ x_{aug} = \begin{bmatrix}
-e_{\phi}, e_{\beta},\phi, \beta, p, r, \delta_{a}, \delta_{r} \end{bmatrix}^T $$
+
+$$ 
+x_{aug} = 
+\begin{bmatrix}
+e_{\phi}, e_{\beta},\phi, \beta, p, r, \delta_{a}, \delta_{r}\\
+\end{bmatrix}^T 
+$$
+
 And:
+
 $$
 A_{aug} = 
 \begin{bmatrix}
@@ -136,6 +162,7 @@ A_{aug} =
 0 & 0  &       0  &        0  &        0  &        0 &         0 & -20.2000\\
 \end{bmatrix}
 $$
+
 $$
 B_{aug} = 
 \begin{bmatrix}
@@ -152,21 +179,39 @@ $$
 
 ## Compute Optimal Gains
 Using our augmented state-space model that includes our bare-airframe, actuators, and tracking error integrators, we can compute the optimal gain matrix $K$ using the standard LQR technique using the performance index:
-$$ J = \int_0^\infty (x^TQx + u^TRu)d\tau$$
-This is done by solving the algebraic Riccati equation (ARE) of the form:
-$$ PA + A^TP - PBR^{-1}B^TP + Q = 0$$
-For the sake of brevity, we will simply select our state weighting matrix (Q) and our control weighting matrix (R), and utilize Matlab's `lqr()` function to compute $ K $.
 
-For $Q$, we will only assign weights to our error states, and for a first-guess will equally weight $\phi$ and $\beta$ error regulation :
-$$ Q = diag([10, 10, 0, 0, 0, 0, 0, 0]) $$
+$$ 
+J = \int_0^\infty (x^TQx + u^TRu)d\tau
+$$
+
+This is done by solving the algebraic Riccati equation (ARE) of the form:
+
+$$ 
+PA + A^TP - PBR^{-1}B^TP + Q = 0
+$$
+
+For the sake of brevity, we will simply select our state weighting matrix (Q) and our control weighting matrix (R), and utilize Matlab's `lqr()` function to compute $K$.
+
+For $Q$, we will only assign weights to our error states, and for a first-guess will equally weight $\phi$ and $\beta$ error regulation:
+
+$$ 
+Q = diag([10, 10, 0, 0, 0, 0, 0, 0]) 
+$$
 
 For $R$, we will just equally weight $\delta_{a}$ and $\delta_{r}$
-$$ R = eye(2,2) $$
+
+$$ 
+R = eye(2,2) 
+$$
 
 Now, the optimal gain matrix is computed using `lqr()`
 
-$$ [K,S,E] = lqr(A_aug, B_aug, Q, R)$$
+$$ 
+[K,S,E] = lqr(A_aug, B_aug, Q, R)
+$$
+
 Which returns the gain matrix:
+
 $$
 K = 
 \begin{bmatrix}
@@ -181,15 +226,19 @@ It is also worth noting that this illustrates one of the downsides to LQR: Full 
 
 ## Verify Results
 We can now verify how well our now-stabilized system performs by creating the closed-loop sys:
+
 $$
-A_{cl} = A_{aug} - B_{aug}*K;\\
-B_{cl} =[-1*eye(2,2), zeros(2,6)]';\\
-C_{cl} = eye(size(A_{cl}));\\
-D_{cl} = zeros(size(B_{cl}))
+\begin{align*}
+A_{cl} &= A_{aug} - B_{aug}K \\
+B_{cl} &= [-1\text{eye}(2,2), \text{zeros}(2,6)]' \\
+C_{cl} &= \text{eye}(\text{size}(A_{cl})) \\
+D_{cl} &= \text{zeros}(\text{size}(B_{cl}))
+\end{align*}
 $$
 
+
 We can now simulate the step response for a $\phi_{cmd}$ and a $\beta_{cmd}$ and plot the results.  
-![image info](./images/closedLoopStepResponse.png)
+![image](images/closedLoopStepResponse.png)
 
 As seen above, for a 20 degree bank angle command:
 - Acceptable rise time and settling time
