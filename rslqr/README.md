@@ -120,8 +120,10 @@ Which means that:
 $$\dot{e_{y_I}} = (y - y_{ref})$$
 
 Adding an error term for both $\phi$ and $\beta$, our state vector is further extended to:
-$$ x_{aug} = \begin{bmatrix}
-e_{\phi}, e_{\beta},\phi, \beta, p, r, \delta_{a}, \delta_{r} \end{bmatrix}^T $$
+$$ x_{aug} = 
+\begin{bmatrix}
+e_{\phi}, e_{\beta},\phi, \beta, p, r, \delta_{a}, \delta_{r}\\
+\end{bmatrix}^T $$
 And:
 $$
 A_{aug} = 
@@ -189,7 +191,7 @@ D_{cl} = zeros(size(B_{cl}))
 $$
 
 We can now simulate the step response for a $\phi_{cmd}$ and a $\beta_{cmd}$ and plot the results.  
-![image info](./images/closedLoopStepResponse.png)
+![image info](images/closedLoopStepResponse.png)
 
 As seen above, for a 20 degree bank angle command:
 - Acceptable rise time and settling time
