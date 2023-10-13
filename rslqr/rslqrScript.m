@@ -1,13 +1,8 @@
 %% Lat/Dir Plant Model
 %
-% Lateral-Directional Dynamics Plant Model for a transport aircraft in
-% cruise configuration from:
-% "Robust and Adaptive Control with Aerospace Applications" 
-% by Lavretsky and Wise, pg. 25
-%
-%
-% The implemented RSLQR Controller in this file is also sourced from this
-% same textbook.
+% Lateral-Directional Dynamics Plant Model for a generic transport aircraft
+% in cruise configuration from:
+
 
 clear;
 close all;
