@@ -23,6 +23,7 @@ A_ba = [ 0.0000,   0.0000,   1.0000,    0.0000;
         -0.0000,  -4.5460,  -1.6990,    0.1717;
          0.0000,   3.3820,  -0.0654,   -0.0893;
 ];
+[nBa, mBa] = size(A_ba);
 
 B_ba = [0.0000,   0.0000;
         0.0000,   0.0116;
@@ -30,11 +31,7 @@ B_ba = [0.0000,   0.0000;
         0.3952,  -1.362;
 ];
 
-C_ba = [ 1,  0    0    0;
-         0,  1,   0    0;
-         0,  0,   1    0;
-         0,  0,   0    1;
-];
+C_ba = eye(nBa, mBa);
 
 D_ba = zeros(size(B_ba));
 
@@ -86,13 +83,13 @@ D_aug = actPlant_ss.D;
 
 
 %% Compute LQR Gains
-qLqr = diag([10, 10, 0, 0, 0, 0 0 0]);
 
-rLqr = diag([1,1]);
-
+qLqr = diag([10, 10, 0, 0, 0, 0, 0, 0]);
+rLqr = eye(2,2);
 
 [kLqr,~,~] = lqr(A_aug, B_aug, qLqr, rLqr);
 
+% Reassign for Simulink Model
 ki_beta = kLqr(:,2);
 ki_phi = kLqr(:,1);
 k_fb = kLqr(:,3:8);
@@ -105,8 +102,8 @@ B_cl =[-1*eye(2,2) zeros(2,6)]';
 C_cl = eye(size(A_cl));
 D_cl = zeros(size(B_cl));
 
-sys_cl = ss(A_cl, B_cl, C_cl, D_cl,'StateName', augStateNames, 'InputName', augInputNames, ...
-               'OutputName', augOutputNames);
+sys_cl = ss(A_cl, B_cl, C_cl, D_cl,'StateName', augStateNames,...
+            'InputName', augInputNames, 'OutputName', augOutputNames);
 
 
 %% Sim it
@@ -155,13 +152,6 @@ xlabel('Time [s]');
 set(get(hf,'CurrentAxes'),'GridAlpha',0.4,'MinorGridAlpha',0.7);
 
 set(hf, 'Position',[1950 146 1428 948]);
-
-
-%% Add command model
-% wn_cm_rps = 2.5;
-% zeta_cm   = sqrt(2)/2;
-% [A_cm, B_cm, C_cm, D_cm] = tf2ss([wn_cm_rps^2],[1 2*zeta_cm*wn_cm_rps wn_cm_rps^2]);
-% cmdMdl_ss = ss(A_cm, B_cm, C_cm, D_cm);
 
 
 
