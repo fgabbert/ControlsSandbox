@@ -2,6 +2,8 @@
 
 The Robust Servomechanism Linear-Quadratic Regulator (RSLQR) is a popular control methodology in the aerospace industry that solves the command-tracking problem by converting it into an error-regulation problem (servomechanism) and then using linear-quadratic regulation (lqr) to optimize the gains.
 
+You can run the `rslqrScript.m` file in this directory to generate the same plot as below if you have matlab :)
+
 # TODO
 - Add better description and derivation ^
 - Add screenshots of simulink model and equate it to the matlab state-space models
