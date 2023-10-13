@@ -80,6 +80,9 @@ $$
 \dfrac{\delta}{\delta_{cmd}} =  \dfrac{20.2}{s+20.2} 
 $$
 
+Here is a step-response of the actuator state-space model:
+![actuatorStep](https://github.com/fgabbert/ControlsSandbox/assets/13810793/8e9b7f4a-a8b4-421e-b81b-36ed55eaa384)
+
 Connect the actuator and airframe plant models in series, extending our system dynamics as follows:
 
 $$
