@@ -166,7 +166,7 @@ Adding an error term for both $\phi$ and $\beta$, our state vector is further ex
 $$ 
 x_{aug} = 
 \begin{bmatrix}
-e_{\phi}, e_{\beta},\phi, \beta, p, r, \delta_{a}, \delta_{r}\\
+e_{\phi}, e_{\beta},\dot{\phi}, \dot{\beta}, \dot{p}, \dot{r}, \dot{\delta_{a}}, \dot{\delta_{r}}\\
 \end{bmatrix}^T 
 $$
 
@@ -211,6 +211,12 @@ This is done by solving the algebraic Riccati equation (ARE) of the form:
 
 $$ 
 PA + A^TP - PBR^{-1}B^TP + Q = 0
+$$
+
+Where
+
+$$
+K = R^{-1}B^TP
 $$
 
 For the sake of brevity, we will simply select our state weighting matrix (Q) and our control weighting matrix (R), and utilize Matlab's `lqr()` function to compute $K$.
