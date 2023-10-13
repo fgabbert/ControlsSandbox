@@ -230,7 +230,7 @@ We can now verify how well our now-stabilized system performs by creating the cl
 $$
 \begin{align*}
 A_{cl} &= A_{aug} - B_{aug}K \\
-B_{cl} &= [-1\text{eye}(2,2), \text{zeros}(2,6)]' \\
+B_{cl} &= [-1*\text{eye}(2,2), \text{zeros}(2,6)]' \\
 C_{cl} &= \text{eye}(\text{size}(A_{cl})) \\
 D_{cl} &= \text{zeros}(\text{size}(B_{cl}))
 \end{align*}
@@ -238,7 +238,7 @@ $$
 
 
 We can now simulate the step response for a $\phi_{cmd}$ and a $\beta_{cmd}$ and plot the results.  
-![image](images/closedLoopStepResponse.png)
+![image](/rslqr/images/closedLoopStepResponse.png)
 
 As seen above, for a 20 degree bank angle command:
 - Acceptable rise time and settling time
