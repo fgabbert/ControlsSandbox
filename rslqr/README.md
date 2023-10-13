@@ -61,6 +61,18 @@ $$
 D_{ba} = 0_{(n_{y_{ba}}, n_{u_{ba}})}
 $$
 
+By inspecting the eigenvalues of the $A_{ba}$ matrix, we can see that the aircraft has a very lightly-damped dutch-roll mode, and a slightly unstable spiral mode. Both of these will be addressed via this controller design.
+
+$$
+Eig(A_{ba}) = 
+\begin{bmatrix}
+  -0.0464 + 1.8784i\\
+  -0.0464 - 1.8784i\\
+  -1.7797 + 0.0000i\\
+   0.0014 + 0.0000i\\
+\end{bmatrix}
+$$
+
 ## Add Actuators
 Now, let's add simple first-order actuators to the plant model, so that we can account for actuator dynamics in our gain optimization. We will assume the same actuator dynamics for both the aileron and rudder actuators.
 
